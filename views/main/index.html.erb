@@ -1,0 +1,11 @@
+<!-- Your code here -->
+<% @cities.each do |c| %>
+    <% if not c.nil? %>
+        <h1> <%= c.name %></h1>
+        <p>
+            population: <%= c.population %> <br>
+            landmark: <%= c.landmark %> <br>
+            temperature: <%= c.weather[:temperature] %>
+        </p>
+    <% end %>
+<% end %>

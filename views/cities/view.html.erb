@@ -1,0 +1,45 @@
+<% printed = false %>
+<% if (defined? @displayCity)%>
+    <% @cities.each do |c| %>
+        <% if c.name == @displayCity %>
+            <h1> <%= c.name %></h1>
+            <p> 
+                population: <%= c.population %> <br>
+                landmark: <%= c.landmark %> <br>
+                temperature: <%= c.weather[:temperature] %>
+            </p>
+            <% printed = true %>
+        <% end %>
+    <% end %>
+<% end %>
+<% if not printed %>
+    <% @cities.each do |c| %>
+        <% if not c.nil? %>
+            <h1> <%= c.name %></h1>
+            <p>
+                population: <%= c.population %> <br>
+                landmark: <%= c.landmark %> <br>
+                temperature: <%= c.weather[:temperature] %>
+            </p>
+        <% end %>
+        <%= form_with local:true, method: 'post', url: 'delete/?deleteCity='+c.name do |form| %>
+        <%= form.submit "Delete this city" %>
+        <br>^ don't click, I tried but I failed :-(
+<% end %>
+    <% end %>
+<% end %>
+<%= form_with local:true, method: 'post', url: 'create' do |form| %>
+<%#= form_with local: true, method: "get" do |form| %>
+    <h1> Create a new city! </h1>
+    <p> city name: <%= form.text_field :city %> </p>
+    <p> population: <%= form.text_field :population %> </p>
+    <p> landmark: <%= form.text_field :landmark %> </p>
+    <%= form.submit "Create new city" %>
+<% end %>
+<%= form_with local: true, method: "get", url: 'update' do |form| %>
+    <h1> Update an existing city! </h1>
+    <p> city name: <%= form.text_field :city %> </p>
+    <p> population: <%= form.text_field :population %> </p>
+    <p> landmark: <%= form.text_field :landmark %> </p>
+    <%= form.submit "Update city" %>
+<% end %>
